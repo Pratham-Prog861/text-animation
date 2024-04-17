@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pratham Prog | Text Animation</title>
+    <style>
+        body {
+     margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+section {
+    height: 100vh;
+    padding: 0 clamp(4rem, 12vw, 20rem);
+    display: grid;
+    place-content: center;
+}
+section h1{
+    text-decoration: underline;
+    font-size: 3vw;
+}
+p{
+    font-size: clamp(2rem, 5vw, 8rem);
+}
+
+section:nth-of-type(1) {
+    border-bottom: 1px solid black;
+}
+
+section:nth-of-type(3) {
+    background: #ffff00;
+}
+
+section:nth-of-type(4) {
+    background: rgb(29, 29, 29);
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <section>
+        <h1>Scroll down for awesomeness.</h1>
+    </section>
+
+    <section>
+        <p class="reveal-type" data-bg-color="#cccccc" data-fg-color="#0a60af">My Name is Pratham Haresh <br> Darji , I want to become a Full <br>Stack Developer.</p>
+    </section>
+
+    <section>
+        <p class="reveal-type" data-bg-color="#b6b600" data-fg-color="black">I have skills in HTML,CSS,JS , <br>React for frontend and i gaining <br> knowledge in backend also. </p>
+    </section>
+
+    <section>
+        <p class="reveal-type" data-bg-color="#353535" data-fg-color="red">The web isn't static anymore,<br> interactivity and motion now <br> dominate.</p>
+    </section>
+
+    <section></section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
+    <script>
+        
+        gsap.registerPlugin(ScrollTrigger)
+
+        const splitTypes = document.querySelectorAll('.reveal-type')
+
+        splitTypes.forEach((char,i) => {
+
+            const bg = char.dataset.bgColor
+            const fg = char.dataset.fgColor
+
+            const text = new SplitType(char, { types: 'chars'})
+
+            gsap.fromTo(text.chars, 
+                {
+                    scaleY:0,
+                    y:-20,
+                    transformOrigin:'top',
+                    color:bg,
+                },
+                {
+                    scaleY:1,
+                    y:0,
+                    color:fg,
+                    duration: 0.3,
+                    stagger: 0.02,
+                    scrollTrigger: {
+                        trigger: char,
+                        start: 'top 80%',
+                        end: 'top 20%',
+                        scrub: true,
+                        markers: false,
+                        toggleActions: 'play play reverse reverse'
+                    }
+            })
+        })
+
+
+        const lenis = new Lenis()
+
+        lenis.on('scroll', (e) => {
+        console.log(e)
+        })
+
+        function raf(time) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+        }
+
+        requestAnimationFrame(raf)
+
+    </script>
+</body>
+</html>
